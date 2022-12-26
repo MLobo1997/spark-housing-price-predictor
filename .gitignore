@@ -2,3 +2,5 @@
 *.iml
 *.crc
 _SUCCESS
+requirements.txt
+.idea
