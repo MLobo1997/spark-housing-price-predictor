@@ -2,10 +2,19 @@ import json
 from typing import Dict
 
 from pyspark.ml import Transformer, Estimator
-from pyspark.ml.util import MLWritable, MLReadable, MLReader, RL, MLWriter
+from pyspark.ml.util import (
+    MLWritable,
+    MLReadable,
+    MLReader,
+    RL,
+    MLWriter,
+    DefaultParamsWriter,
+)
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import udf, col, avg, monotonically_increasing_id
 from pyspark.sql.types import IntegerType
+
+PERSISTENCE_FILE = "price_ranks.json"
 
 
 class ZipCodeRankerModelWriter(MLWriter):
@@ -14,13 +23,17 @@ class ZipCodeRankerModelWriter(MLWriter):
         self.instance = instance
 
     def saveImpl(self, path: str) -> None:
-        with open(path, "w") as file:
+        jsonParams = {"language": "Python"}
+        DefaultParamsWriter.saveMetadata(
+            self.instance, path, self.sc, paramMap=jsonParams
+        )
+        with open(f"{path}/{PERSISTENCE_FILE}", "w") as file:
             file.write(json.dumps(self.instance.price_rank_per_zipcode_dict))
 
 
 class ZipCodeRankerModelReader(MLReader):
     def load(self, path: str) -> RL:
-        with open(path, "r") as file:
+        with open(f"{path}/{PERSISTENCE_FILE}", "r") as file:
             price_rank_per_zipcode_dict = json.load(file)
         return ZipCodeRankerModel(
             {int(k): int(v) for k, v in price_rank_per_zipcode_dict.items()}
