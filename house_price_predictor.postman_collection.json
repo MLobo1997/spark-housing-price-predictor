@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "4fc9c4be-7518-4b5d-b33a-5f08f96e2c2d",
+		"name": "House price predictor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18104167"
+	},
+	"item": [
+		{
+			"name": "predict",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"id\": 7129300520,\n    \"date\": \"20141013T000000\",\n    \"bedrooms\": 3.0,\n    \"bathrooms\": 1.0,\n    \"sqft_living\": 1180.0,\n    \"floors\": 1.0,\n    \"waterfront\": 0,\n    \"view\": 0,\n    \"condition\": 3,\n    \"grade\": 7,\n    \"sqft_above\": 1180.0,\n    \"sqft_basement\": 0.0,\n    \"yr_built\": 1955,\n    \"yr_renovated\": 0,\n    \"zipcode\": 98178,\n    \"lat\": 47.5112,\n    \"long\": -122.257,\n    \"sqft_living15\": 1340.0,\n    \"sqft_lot15\": 5650.0\n  },\n  {\n    \"id\": 6414100192,\n    \"date\": \"20141209T000000\",\n    \"bedrooms\": 3.0,\n    \"bathrooms\": 2.25,\n    \"sqft_living\": 2570.0,\n    \"sqft_lot\": 7242.0,\n    \"floors\": 2.0,\n    \"waterfront\": 0,\n    \"view\": 0,\n    \"condition\": 3,\n    \"grade\": 7,\n    \"sqft_above\": 2170.0,\n    \"sqft_basement\": 400.0,\n    \"yr_built\": 1951,\n    \"yr_renovated\": 1991,\n    \"zipcode\": 98125,\n    \"lat\": 47.721,\n    \"long\": -122.319,\n    \"sqft_living15\": 1690.0,\n    \"sqft_lot15\": 7639.0\n  },\n  {\n    \"id\": 5631500400,\n    \"date\": \"20150225T000000\",\n    \"bedrooms\": 2.0,\n    \"bathrooms\": 1.0,\n    \"sqft_living\": 770.0,\n    \"sqft_lot\": 10000.0,\n    \"floors\": 1.0,\n    \"waterfront\": 0,\n    \"view\": 0,\n    \"condition\": 3,\n    \"grade\": 6,\n    \"sqft_above\": 770.0,\n    \"sqft_basement\": 0.0,\n    \"yr_built\": 1933,\n    \"yr_renovated\": 0,\n    \"zipcode\": 98028,\n    \"lat\": 47.7379,\n    \"long\": -122.233,\n    \"sqft_living15\": 2720.0,\n    \"sqft_lot15\": 8062.0\n  },\n  {\n    \"id\": 2487200875,\n    \"date\": \"20141209T00000&10\",\n    \"bedrooms\": 4.0,\n    \"bathrooms\": 3.0,\n    \"sqft_living\": 1960.0,\n    \"sqft_lot\": 5000.0,\n    \"floors\": 1.0,\n    \"waterfront\": 0,\n    \"view\": 0,\n    \"condition\": 5,\n    \"grade\": 7,\n    \"sqft_above\": 1050.0,\n    \"sqft_basement\": 910.0,\n    \"yr_built\": 1965,\n    \"yr_renovated\": 0,\n    \"zipcode\": 98136,\n    \"lat\": 47.5208,\n    \"long\": -122.393,\n    \"sqft_living15\": 1360.0,\n    \"sqft_lot15\": 5000.0\n  },\n  {\n    \"id\": 1954400510,\n    \"date\": \"20150218T000000\",\n    \"bedrooms\": 3.0,\n    \"bathrooms\": 2.0,\n    \"sqft_living\": 1680.0,\n    \"sqft_lot\": 8080.0,\n    \"floors\": 1.0,\n    \"waterfront\": 0,\n    \"view\": 0,\n    \"condition\": 3,\n    \"grade\": 8,\n    \"sqft_above\": 1680.0,\n    \"sqft_basement\": 0.0,\n    \"yr_built\": 1987,\n    \"yr_renovated\": 0,\n    \"zipcode\": 98074,\n    \"lat\": 47.6168,\n    \"long\": -122.045,\n    \"sqft_living15\": 1800.0,\n    \"sqft_lot15\": 7503.0\n  }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pred_price",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pred_price"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
