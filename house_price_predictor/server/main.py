@@ -1,6 +1,6 @@
 from collections import defaultdict
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Dict, Union
 
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -26,24 +26,24 @@ class Row(BaseModel):
 
     id: int
     date: Optional[str]
-    bedrooms: Optional[float]
-    bathrooms: Optional[float]
-    sqft_living: Optional[float]
-    sqft_lot: Optional[float]
-    floors: Optional[float]
-    waterfront: Optional[int]
-    view: Optional[int]
-    condition: Optional[int]
-    grade: Optional[int]
-    sqft_above: Optional[float]
-    sqft_basement: Optional[float]
-    yr_built: Optional[int]
-    yr_renovated: Optional[int]
-    zipcode: Optional[int]
-    lat: Optional[float]
-    long: Optional[float]
-    sqft_living15: Optional[float]
-    sqft_lot15: Optional[float]
+    bedrooms: Optional[Union[float, str]]
+    bathrooms: Optional[Union[float, str]]
+    sqft_living: Optional[Union[float, str]]
+    sqft_lot: Optional[Union[float, str]]
+    floors: Optional[Union[float, str]]
+    waterfront: Optional[Union[int, str]]
+    view: Optional[Union[int, str]]
+    condition: Optional[Union[int, str]]
+    grade: Optional[Union[int, str]]
+    sqft_above: Optional[Union[float, str]]
+    sqft_basement: Optional[Union[float, str]]
+    yr_built: Optional[Union[int, str]]
+    yr_renovated: Optional[Union[int, str]]
+    zipcode: Optional[Union[int, str]]
+    lat: Optional[Union[float, str]]
+    long: Optional[Union[float, str]]
+    sqft_living15: Optional[Union[float, str]]
+    sqft_lot15: Optional[Union[float, str]]
 
     class Config:
         """An example to make the openapi definition look prettier."""
@@ -80,36 +80,16 @@ class RowPredictionResponse(BaseModel):
 
     id: int
     prediction: float
-    warnings: Optional[List[str]]
-
-
-def is_invalid_date(date: str) -> bool:
-    try:
-        datetime.strptime(date, "%Y%m%dT%H%M%S")
-        return False
-    except ValueError:
-        return True
+    warnings: List[str]
 
 
 # I chose a PUT method because this is an idempotent method. POST definition is more for non-idempotent operations.
 @app.put("/pred_price", response_model=List[RowPredictionResponse])
 def predict(data: List[Row]) -> List[RowPredictionResponse]:
-    # Checks if there are any missing features to add to the warnings
-    warnings = defaultdict(list)
-    for row in data:
-        for row_property in row.schema()["properties"].keys():
-            if getattr(row, row_property) is None and row_property != "id":
-                warnings[row.id].append(
-                    f"The row property '{row_property}' is missing so it and its derived features will be imputed."
-                )
-            elif row_property == "date" and is_invalid_date(getattr(row, row_property)):
-                warnings[row.id].append(
-                    f"The 'date' format is invalid, so the date and all derived features will be imputed."
-                )
-                row.date = None
+    warnings = _generate_warnings(data)
 
     # Performs the full feature engineering and computes the predictions
-    df = spark.createDataFrame(data=map(vars, data), schema=schema)
+    df = spark.createDataFrame(data=map(vars, data), schema=schema, verifySchema=False)
     result_df = pipeline_model.transform(df).select("id", "prediction")
 
     # Joins the warnings with the predictions and returns them
@@ -119,3 +99,44 @@ def predict(data: List[Row]) -> List[RowPredictionResponse]:
         )
         for row in result_df.collect()
     ]
+
+
+def _generate_warnings(data: List[Row]) -> Dict[int, List[str]]:
+    """Checks if there are any missing/invalid features to add to the warnings"""
+    warnings = defaultdict(list)
+    for row in data:
+        for row_property in row.schema()["properties"].keys():
+            val = getattr(row, row_property)
+            if row_property == "date":
+                if _is_invalid_date(val):
+                    warnings[row.id].append(
+                        f"The 'date' format is invalid, so the date and all derived "
+                        f"features will be imputed."
+                    )
+                    row.date = None
+            elif row_property != "id" and _is_invalid_num(val):
+                warnings[row.id].append(
+                    f"The row property '{row_property}' is missing or invalid so "
+                    f"it and its derived features will be imputed."
+                )
+    return warnings
+
+
+def _is_invalid_num(num: str) -> bool:
+    if num is None:
+        return True
+    try:
+        float(num)
+        return False
+    except ValueError:
+        return True
+
+
+def _is_invalid_date(date: str) -> bool:
+    if date is None:
+        return True
+    try:
+        datetime.strptime(date, "%Y%m%dT%H%M%S")
+        return False
+    except ValueError:
+        return True
