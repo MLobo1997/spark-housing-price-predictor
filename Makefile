@@ -1,4 +1,8 @@
-start-fast-api:
+start-local-dev-server:
+	poetry install
+	uvicorn house_price_predictor.server.main:app --reload --port 8080
+
+start-server:
 	poetry install
 	poetry export --without-hashes -f requirements.txt --output requirements.txt
 	docker build -t miguelobo/house-price-predictor:0.0.1 .
