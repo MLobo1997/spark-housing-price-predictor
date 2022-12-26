@@ -32,4 +32,9 @@ class ZipcodeRanker(Estimator):
             .drop("price_avg")
             .withColumn("zipcode_price_rank", monotonically_increasing_id())
         )
-        return ZipCodeRankerModel({row["zipcode"]: row["zipcode_price_rank"] for row in zipcodes_price_df.collect()})
+        return ZipCodeRankerModel(
+            {
+                row["zipcode"]: row["zipcode_price_rank"]
+                for row in zipcodes_price_df.collect()
+            }
+        )

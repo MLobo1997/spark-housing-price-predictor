@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.SQLTransformer","timestamp":1672019229047,"sparkVersion":"3.3.0","uid":"SQLTransformer_7d492b861877","paramMap":{"statement":"SELECT *, year(converted_date) - yr_built AS construction_age FROM __THIS__"},"defaultParamMap":{}}
