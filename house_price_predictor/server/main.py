@@ -38,14 +38,12 @@ class Row(BaseModel):
     sqft_lot15: float
 
 
-class Data(BaseModel):
-    rows: List[Row]
 
 # PUT because this is an idempotent method and POST definition is more for non idempoen
 @app.put("/pred_price")
-def pred(data: List[dict]):
+def predict(data: List[Row]):
     # MAY LIST?
-    df = spark.createDataFrame(data=data, schema=schema)
+    df = spark.createDataFrame(data=map(vars, data), schema=schema)
     # using IDs is a good API design pattern for ML
     result_df = pipeline_model.transform(df).select("id", "prediction")
     return list(map(lambda x: x.asDict(), result_df.collect()))
