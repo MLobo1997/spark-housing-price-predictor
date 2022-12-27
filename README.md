@@ -4,7 +4,7 @@ A production-ready housing price predictor built in Apache Spark.
 
 ## Usage steps
 
-1. Make sure to have [poetry installed](https://python-poetry.org/docs/) and Docker installed.
+1. Make sure to have [poetry installed](https://python-poetry.org/docs/), [git-lfs](https://git-lfs.com/) and Docker installed.
 2. Run `git lfs pull` to ensure you have all the files in place.
 3. Run `make start-server`
 4. Access [http://localhost:8080/docs](http://localhost:8080/docs) to check the endpoint documentation.

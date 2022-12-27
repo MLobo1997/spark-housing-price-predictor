@@ -15,7 +15,7 @@ app = FastAPI(
     version="0.0.1",
 )
 
-spark = SparkSession.builder.config("spark.driver.memory", "512m").getOrCreate()
+spark = SparkSession.builder.config("spark.driver.memory", "2g").getOrCreate()
 sc = spark.sparkContext
 
 pipeline_model = PipelineModel.load("models/best_model")
