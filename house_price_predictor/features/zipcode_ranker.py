@@ -38,6 +38,7 @@ class ZipcodeRanker(Estimator):
 
 class ZipCodeRankerModel(Transformer, MLWritable, MLReadable["ZipCodeRankerModel"]):
     """Creates a new column with the zipcode position within the ranking."""
+
     def __init__(self, price_rank_per_zipcode_dict: Dict[int, int]) -> None:
         super().__init__()
         self.price_rank_per_zipcode_dict = price_rank_per_zipcode_dict
