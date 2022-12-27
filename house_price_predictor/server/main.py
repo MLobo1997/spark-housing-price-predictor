@@ -15,14 +15,17 @@ app = FastAPI(
     version="0.0.1",
 )
 
-spark = SparkSession.builder.config("spark.driver.memory", "4g").getOrCreate()
+spark = SparkSession.builder.config("spark.driver.memory", "512m").getOrCreate()
 sc = spark.sparkContext
 
-pipeline_model = PipelineModel.load("models/lr-1672019228")
+pipeline_model = PipelineModel.load("models/best_model")
 
 
 class Row(BaseModel):
-    """The pydantic definition of each data row"""
+    """The pydantic definition of each data row
+
+    The values can all be string just because if not the validation would immediately break any request with invalid data.
+    """
 
     id: int
     date: Optional[str]

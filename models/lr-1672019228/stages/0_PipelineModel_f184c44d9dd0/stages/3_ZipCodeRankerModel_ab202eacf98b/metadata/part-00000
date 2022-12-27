@@ -1,1 +1,0 @@
-{"class":"house_price_predictor.features.zipcode_ranker.ZipCodeRankerModel","timestamp":1672019229270,"sparkVersion":"3.3.0","uid":"ZipCodeRankerModel_ab202eacf98b","paramMap":{"language":"Python"},"defaultParamMap":{}}

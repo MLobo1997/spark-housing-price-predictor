@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.SQLTransformer","timestamp":1672113569364,"sparkVersion":"3.3.0","uid":"SQLTransformer_9df5d98d3747","paramMap":{"statement":"SELECT *, year(converted_date) - greatest(yr_built, yr_renovated) AS renovation_age FROM __THIS__"},"defaultParamMap":{}}

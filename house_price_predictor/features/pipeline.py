@@ -12,7 +12,7 @@ from house_price_predictor.features.sql_transformers import (
 )
 from house_price_predictor.features.zipcode_ranker import ZipcodeRanker
 
-FIELDS_TO_EXCLUDE = {"price", "id", "yr_built", "yr_renovated"}
+FEATS_TO_EXCLUDE = {"price", "id", "yr_built", "yr_renovated"}
 
 FEATURE_DTYPES = [
     IntegerType.typeName(),
@@ -22,14 +22,17 @@ FEATURE_DTYPES = [
 ]
 
 
-def get_all_feat_names(dataset: DataFrame) -> List[str]:
+def get_all_feat_names(dataset: DataFrame, feats_to_exclude=None) -> List[str]:
     """Gets all features of a Dataframe that are numerical and should not be excluded"""
+    if feats_to_exclude is None:
+        feats_to_exclude = FEATS_TO_EXCLUDE
+
     original_fields = [
         field.name
         for field in dataset.schema.fields
         if (
             (field.dataType.typeName() in FEATURE_DTYPES)
-            and (field.name not in FIELDS_TO_EXCLUDE)
+            and (field.name not in feats_to_exclude)
         )
     ]
 

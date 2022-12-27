@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.SQLTransformer","timestamp":1672113569162,"sparkVersion":"3.3.0","uid":"SQLTransformer_4c863fd3f633","paramMap":{"statement":"SELECT *, to_timestamp(date, \"yyyyMMdd'T'HHmmss\") AS converted_date FROM __THIS__"},"defaultParamMap":{}}
