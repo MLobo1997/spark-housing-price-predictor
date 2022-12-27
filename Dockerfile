@@ -45,4 +45,4 @@ USER myuser
 
 CMD ["uvicorn", "house_price_predictor.server.main:app", "--host", "0.0.0.0", "--port", "8080"]
 #Use this one for heroku
-#CMD uvicorn server.main:app --app-dir src --host 0.0.0.0 --port ${PORT##\\}
+#CMD uvicorn house_price_predictor.server.main:app --host 0.0.0.0 --port ${PORT##\\}
