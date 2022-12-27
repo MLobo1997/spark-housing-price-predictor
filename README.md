@@ -5,9 +5,10 @@ A production-ready housing price predictor built in Apache Spark.
 ## Usage steps
 
 1. Make sure to have [poetry installed](https://python-poetry.org/docs/) and Docker installed.
-2. Run `make start-server`
-3. Access [http://localhost:8080/docs](http://localhost:8080/docs) to check the endpoint documentation.
-4. Import the collection [house_price_predictor.postman_collection.json](house_price_predictor.postman_collection.json) in [Postman](https://www.postman.com/) to test the API. You can try removing features or adding noise to them.
+2. Run `git lfs pull` to ensure you have all the files in place.
+3. Run `make start-server`
+4. Access [http://localhost:8080/docs](http://localhost:8080/docs) to check the endpoint documentation.
+5. Import the collection [house_price_predictor.postman_collection.json](house_price_predictor.postman_collection.json) in [Postman](https://www.postman.com/) to test the API. You can try removing features or adding noise to them.
 
 ## Project Walk-through
 
